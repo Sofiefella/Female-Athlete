@@ -11,7 +11,7 @@ library(shiny)
 library(tidyverse)
 
 
-# data <- read_rds("")
+sidata_201015 <- read_rds("Female_Athlete/sidata_201015.rds")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -61,12 +61,23 @@ ui <- fluidPage(
 server <- function(input, output) {
 
     output$distPlot <- renderPlot({
-        #data %>%
-            #ggplot(aes())
+        sidata_201015 %>%
+            ggplot(sidata_201015, aes(x = year, y = frequency, fill = on_cover)) +
+            geom_col() +
+            scale_fill_manual(values = c("darkcyan", "coral", "azure4", "darkolivegreen",
+                                         "chocolate", "darkseagreen"), 
+                              guide_legend(title="Who is on the cover?")) +
+            labs(title = "Comparison of Who is on Sports Illustrated Covers 
+      throughout the Decade",
+                 x = "Year", 
+                 y = "Number of Covers") +
+            theme_minimal() +
+            scale_x_continuous(breaks = c(2010, 2011, 2012, 2013, 2014, 2015, 2016, 
+            2017, 2018, 2019, 2020), labels = c(2010, 2011, 2012, 2013, 2014, 2015, 2016, 
+                                                2017, 2018, 2019, 2020))
         
         
-        
-    })
+        })
     
     output$histPlot <- renderPlot({
         #data2 %>%
